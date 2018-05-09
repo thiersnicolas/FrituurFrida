@@ -7,6 +7,7 @@
 	<c:param name="title" value="Frituur Frida"></c:param>
 </c:import>
 </head>
+<body>
 <h1>Frituur Frida</h1>
 <h2>Vandaag zijn we</h2> 
 <div>${openGesloten}</div>
@@ -16,6 +17,6 @@
 	<dt>Postcode</dt><dd>${adres.gemeente.postcode}</dd>
 	<dt>Gemeente</dt><dd>${adres.gemeente.naam}</dd>
 </dl>
-<body>
+<footer>Heeft u vragen of opmerkingen dan kan u steeds terecht bij onze helpdesk via het nummer: ${helpdesk}</footer>
 </body>
 </html>

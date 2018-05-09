@@ -16,7 +16,7 @@ import be.vdab.entities.openGesloten;
  * Servlet implementation class IndexServlet
  */
 
-@WebServlet("/index.htm")
+@WebServlet(urlPatterns = "/index.htm", name="indexservlet")
 public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static String VIEW = "/WEB-INF/JSP/index.jsp";
@@ -24,6 +24,7 @@ public class IndexServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,HttpServletResponse response)
 	throws ServletException, IOException {
+		request.setAttribute("helpdesk", this.getServletContext().getInitParameter("helpdesk"));
 		request.setAttribute("openGesloten", new openGesloten());
 		request.setAttribute("adres", new Adres("Putstraat", "2", new Gemeente("Waasmunster", 9250)));
 		request.getRequestDispatcher(VIEW).forward(request, response);
