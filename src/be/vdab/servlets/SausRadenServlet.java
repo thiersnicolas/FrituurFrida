@@ -1,6 +1,7 @@
 package be.vdab.servlets;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +17,6 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet("/sausraden")
 public class SausRadenServlet extends HttpServlet implements Serializable {
-	private static final long serialVersionUID = 1L;
 	private static final long serialVersionUID = 1L;
 	private static final String VIEW = "/WEB-INF/JSP/sausraden.jsp";
 	//private final SausRepository sausRepository = new SausRepository();
