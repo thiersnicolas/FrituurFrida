@@ -58,4 +58,13 @@ public class SausRepository {
 			}
 		}
 	}
+	
+	public List<String> sauzenNamen(){
+		List<Saus> sauzen = new ArrayList<>(SAUZEN.values());
+		List<String> sauzenNamen = new ArrayList<>();
+		for (Saus saus: sauzen) {
+			sauzenNamen.add(saus.getNaam());
+		}
+		return sauzenNamen;
+	}
 }
