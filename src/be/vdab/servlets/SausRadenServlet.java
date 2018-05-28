@@ -15,7 +15,8 @@ import javax.servlet.http.HttpSession;
  * Servlet implementation class SausRadenServlet
  */
 @WebServlet("/sausraden")
-public class SausRadenServlet extends HttpServlet {
+public class SausRadenServlet extends HttpServlet implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private static final long serialVersionUID = 1L;
 	private static final String VIEW = "/WEB-INF/JSP/sausraden.jsp";
 	//private final SausRepository sausRepository = new SausRepository();
