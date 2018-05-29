@@ -1,53 +1,56 @@
-package be.vdab.listener;
+package be.vdab.filter;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.ServletRequestEvent;
-import javax.servlet.ServletRequestListener;
-import javax.servlet.annotation.WebListener;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Application Lifecycle Listener implementation class URLListener
- *
+ * Servlet Filter implementation class URLFilter
  */
-/*
-public class URLListener implements ServletContextListener, ServletRequestListener {
+@WebFilter("/*")
+public class URLFilter implements Filter {
 	private static final String AANTAL_REQUESTS_MAP = "aantalrequestsmap";
 	private final static Set<String> UITGESLOTEN_EXTENSIES = new CopyOnWriteArraySet<>(
 			Arrays.asList("jpg", "png", "gif", "css", "js", "ico"));
 	private final static Set<String> BESTAANDE_PAGINAS = new CopyOnWriteArraySet<>(
 			Arrays.asList("frituurfrida", "sauzen", "statistiek", "voorkeursauzen", "sausraden"));
+	private FilterConfig fConfig;
+
+    /**
+     * Default constructor. 
+     */
+    public URLFilter() {
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * Default constructor.
+	 * @see Filter#destroy()
 	 */
-	public URLListener() {
-
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see ServletRequestListener#requestDestroyed(ServletRequestEvent)
-	 */
-	public void requestDestroyed(ServletRequestEvent arg0) {
+	public void destroy() {
 		// TODO Auto-generated method stub
 	}
 
 	/**
-	 * @see ServletRequestListener#requestInitialized(ServletRequestEvent)
+	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
-	public void requestInitialized(ServletRequestEvent event) {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		
 		boolean urlCorrect = false;
-		if (event.getServletRequest() instanceof HttpServletRequest) {
-			HttpServletRequest request = (HttpServletRequest) event.getServletRequest();
-			String url = request.getRequestURI().split(";")[0];
+		if (request instanceof HttpServletRequest) {
+			HttpServletRequest httpRequest = (HttpServletRequest) request;
+			String url = httpRequest.getRequestURI().split(";")[0];
 
 			String extensie = "toegelaten";
 			if (url.contains(".")) {
@@ -61,7 +64,7 @@ public class URLListener implements ServletContextListener, ServletRequestListen
 				String dezePagina = dezePaginaArray[dezePaginaArray.length - 1];
 				for (String pagina : BESTAANDE_PAGINAS) {
 					@SuppressWarnings("unchecked")
-					ConcurrentHashMap<String, AtomicInteger> aantalRequestsMap = (ConcurrentHashMap<String, AtomicInteger>) event.getServletContext().getAttribute(AANTAL_REQUESTS_MAP);
+					ConcurrentHashMap<String, AtomicInteger> aantalRequestsMap = (ConcurrentHashMap<String, AtomicInteger>) fConfig.getServletContext().getAttribute(AANTAL_REQUESTS_MAP);
 					if (pagina.equals(dezePagina)) {
 						if (aantalRequestsMap.containsKey(pagina)) {
 							AtomicInteger aantalRequests = aantalRequestsMap.get(pagina);
@@ -73,26 +76,22 @@ public class URLListener implements ServletContextListener, ServletRequestListen
 							aantalRequestsMap.put(pagina, aantalRequests);
 						}
 						if (pagina.equals("statistiek")) {
-							event.getServletContext().setAttribute(AANTAL_REQUESTS_MAP, aantalRequestsMap);
+							fConfig.getServletContext().setAttribute(AANTAL_REQUESTS_MAP, aantalRequestsMap);
 						}
 					}
 				}
 			}
 		}
-	}
-	
-	/**
-	 * @see ServletContextListener#contextDestroyed(ServletContextEvent)
-	 */
-	public void contextDestroyed(ServletContextEvent arg0) {
-		// TODO Auto-generated method stub
+
+		// pass the request along the filter chain
+		chain.doFilter(request, response);
 	}
 
 	/**
-	 * @see ServletContextListener#contextInitialized(ServletContextEvent)
+	 * @see Filter#init(FilterConfig)
 	 */
-	public void contextInitialized(ServletContextEvent event) {
-		event.getServletContext().setAttribute(AANTAL_REQUESTS_MAP, new ConcurrentHashMap<String, AtomicInteger>());
+	public void init(FilterConfig fConfig) throws ServletException {
+		this.fConfig = fConfig;
 	}
 
 }
