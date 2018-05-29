@@ -8,7 +8,11 @@
 </c:import>
 </head>
 <h1>Statistieken</h1>
-<h2>aantal requests statistiek: ${aantalRequests}</h2>
+<ul>
+<c:forEach var="entry" items="${aantalrequestsmap}">
+	<li>${entry.key}: ${entry.value} requests</li>
+</c:forEach>
+</ul>
 <body>
 </body>
 </html>
