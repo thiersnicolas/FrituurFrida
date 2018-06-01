@@ -9,7 +9,6 @@
 </head>
 <body>
 	<h1>Saus raden</h1>
-	<form method="post">
 		<c:if test='${not empty geraden and not gewonnen and not verloren}'>
 			<h2>
 				Te raden saus:
@@ -17,8 +16,8 @@
 			</h2>
 			<h2>letter:</h2>
 			<form method="post">
-			<input type="text" size="2" required minlength="1" maxlength="1" name="raden">
-			<input type="submit" value="Raden"">
+			<input type="text" size="2" required maxlength="1" name="raden">
+			<input type="submit" value="Raden">
 			</form>
 		</c:if>
 		<c:if test='${gewonnen}'>

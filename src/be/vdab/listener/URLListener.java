@@ -1,4 +1,4 @@
-package be.vdab.listener;
+/*package be.vdab.listener;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -28,7 +28,7 @@ public class URLListener implements ServletContextListener, ServletRequestListen
 	/**
 	 * Default constructor.
 	 */
-	public URLListener() {
+	/*public URLListener() {
 
 		// TODO Auto-generated constructor stub
 	}
@@ -36,14 +36,14 @@ public class URLListener implements ServletContextListener, ServletRequestListen
 	/**
 	 * @see ServletRequestListener#requestDestroyed(ServletRequestEvent)
 	 */
-	public void requestDestroyed(ServletRequestEvent arg0) {
+	/*public void requestDestroyed(ServletRequestEvent arg0) {
 		// TODO Auto-generated method stub
 	}
 
 	/**
 	 * @see ServletRequestListener#requestInitialized(ServletRequestEvent)
 	 */
-	public void requestInitialized(ServletRequestEvent event) {
+	/*public void requestInitialized(ServletRequestEvent event) {
 		boolean urlCorrect = false;
 		if (event.getServletRequest() instanceof HttpServletRequest) {
 			HttpServletRequest request = (HttpServletRequest) event.getServletRequest();
@@ -84,15 +84,15 @@ public class URLListener implements ServletContextListener, ServletRequestListen
 	/**
 	 * @see ServletContextListener#contextDestroyed(ServletContextEvent)
 	 */
-	public void contextDestroyed(ServletContextEvent arg0) {
+	/*public void contextDestroyed(ServletContextEvent arg0) {
 		// TODO Auto-generated method stub
 	}
 
 	/**
 	 * @see ServletContextListener#contextInitialized(ServletContextEvent)
 	 */
-	public void contextInitialized(ServletContextEvent event) {
+	/*public void contextInitialized(ServletContextEvent event) {
 		event.getServletContext().setAttribute(AANTAL_REQUESTS_MAP, new ConcurrentHashMap<String, AtomicInteger>());
 	}
 
-}
+}*/

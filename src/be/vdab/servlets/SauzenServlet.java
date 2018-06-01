@@ -2,11 +2,13 @@ package be.vdab.servlets;
 
 import java.io.IOException;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 import be.vdab.repositories.SausRepository;
 
@@ -17,7 +19,7 @@ import be.vdab.repositories.SausRepository;
 public class SauzenServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static String VIEW="WEB-INF/JSP/sauzen.jsp";
-	private final SausRepository sausRepository = new SausRepository();
+	private final transient SausRepository sausRepository = new SausRepository();
 	private final static String REDIRECT_URL="/sauzen";   
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -85,6 +87,11 @@ public class SauzenServlet extends HttpServlet {
 			request.setAttribute("fouten", fouten);
 			request.getRequestDispatcher(VIEW).forward(request, response);
 		}*/
+	}
+	
+	@Resource(name=SausRepository.JNDI_NAME)
+	void setDataSource(DataSource dataSource) {
+		sausRepository.setDataSource(dataSource);
 	}
 
 }

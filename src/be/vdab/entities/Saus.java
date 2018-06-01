@@ -10,6 +10,11 @@ public class Saus {
 	
 	public Saus() {
 	}
+	
+	public Saus(long id, String naam) {
+		this.id=id;
+		this.naam=naam;
+	}
 
 	public Saus(long id, String naam, List<String> ingredienten) {
 		this.id = id;
