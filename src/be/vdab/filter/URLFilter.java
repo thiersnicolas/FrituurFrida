@@ -33,6 +33,7 @@ public class URLFilter implements Filter {
      */
     public URLFilter() {
         // TODO Auto-generated constructor stub
+    	
     }
 
 	/**
@@ -50,7 +51,8 @@ public class URLFilter implements Filter {
 		boolean urlCorrect = false;
 		if (request instanceof HttpServletRequest) {
 			HttpServletRequest httpRequest = (HttpServletRequest) request;
-			String url = httpRequest.getRequestURI().split(";")[0];
+			String url = httpRequest.getRequestURI();
+			url = url.split("\\;")[0];
 
 			String extensie = "toegelaten";
 			if (url.contains(".")) {
@@ -60,18 +62,17 @@ public class URLFilter implements Filter {
 				urlCorrect = true;
 			}
 			if (urlCorrect) {
-				String[] dezePaginaArray = url.split("/");
-				String dezePagina = dezePaginaArray[dezePaginaArray.length - 1];
+				//String[] dezePaginaArray = url.split("\\/");
+				String dezePagina = url.split("\\/")[url.split("\\/").length - 1];
+				@SuppressWarnings("unchecked")
+				ConcurrentHashMap<String, AtomicInteger> aantalRequestsMap = (ConcurrentHashMap<String, AtomicInteger>) fConfig.getServletContext().getAttribute(AANTAL_REQUESTS_MAP);
 				for (String pagina : BESTAANDE_PAGINAS) {
-					@SuppressWarnings("unchecked")
-					ConcurrentHashMap<String, AtomicInteger> aantalRequestsMap = (ConcurrentHashMap<String, AtomicInteger>) fConfig.getServletContext().getAttribute(AANTAL_REQUESTS_MAP);
 					if (pagina.equals(dezePagina)) {
 						if (aantalRequestsMap.containsKey(pagina)) {
 							AtomicInteger aantalRequests = aantalRequestsMap.get(pagina);
 							aantalRequests.incrementAndGet();
 							aantalRequestsMap.put(pagina, aantalRequests);
 						} else {
-							System.out.println("De map bevat nog geen " + pagina);
 							AtomicInteger aantalRequests = new AtomicInteger(1);
 							aantalRequestsMap.put(pagina, aantalRequests);
 						}
@@ -82,7 +83,7 @@ public class URLFilter implements Filter {
 				}
 			}
 		}
-
+		
 		// pass the request along the filter chain
 		chain.doFilter(request, response);
 	}
@@ -92,6 +93,8 @@ public class URLFilter implements Filter {
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
 		this.fConfig = fConfig;
+		//new ConcurrentHashMap<String, AtomicInteger> aantalRequestsMap = (ConcurrentHashMap<String, AtomicInteger>)
+		fConfig.getServletContext().setAttribute(AANTAL_REQUESTS_MAP, new ConcurrentHashMap<String, AtomicInteger>());
 	}
 
 }

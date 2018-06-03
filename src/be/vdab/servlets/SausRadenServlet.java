@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import be.vdab.repositories.SausRepository;
+//import be.vdab.repositories.SausRepository;
 
 /**
  * Servlet implementation class SausRadenServlet
@@ -19,7 +19,7 @@ import be.vdab.repositories.SausRepository;
 public class SausRadenServlet extends HttpServlet implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final String VIEW = "/WEB-INF/JSP/sausraden.jsp";
-	private final SausRepository sausRepository = new SausRepository();
+	//private final SausRepository sausRepository = new SausRepository();
 	private int aantalFout;
 	private char[] geraden;
 	private String saus;
@@ -60,8 +60,8 @@ public class SausRadenServlet extends HttpServlet implements Serializable {
 		HttpSession session = request.getSession();
 		if (request.getParameter("nieuwSpel") != null) {
 			aantalFout = 0;
-			saus = sausRepository.sauzenNamen().get((int)(Math.random()*(sausRepository.sauzenNamen().size())));
-			//saus = "nicolas loves liese";
+			//saus = sausRepository.sauzenNamen().get((int)(Math.random()*(sausRepository.sauzenNamen().size())));
+			saus = "nicolas loves liese";
 			geraden = new char[saus.length()];
 			for (int i=0; i<saus.length(); i++) {
 				if (saus.charAt(i) == ' ') {

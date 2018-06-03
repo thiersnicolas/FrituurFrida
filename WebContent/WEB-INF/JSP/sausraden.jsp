@@ -8,28 +8,29 @@
 </c:import>
 </head>
 <body>
-	<h1>Saus raden</h1>
-	<form method="post">
+	<h1>Tekst raden</h1>
+
 		<c:if test='${not empty geraden and not gewonnen and not verloren}'>
 			<h2>
-				Te raden saus:
+				Te raden tekst:
 				<c:forEach var='letter' items='${geraden}'>${letter}</c:forEach>
 			</h2>
 			<h2>letter:</h2>
 			<form method="post">
-			<input type="text" size="2" required minlength="1" maxlength="1" name="raden">
-			<input type="submit" value="Raden"">
+			<input type="text" size="2" required  maxlength="1" name="raden">
+			<input type="submit" value="Raden">
 			</form>
 		</c:if>
 		<c:if test='${gewonnen}'>
-			<h2>U bent gewonnen, de te raden saus was: ${saus}</h2>
+			<h2>U bent gewonnen, ${saus}</h2>
+			<img src='<c:url value="/images/gewonnen.png"/>' alt='LOVE'>
 		</c:if>
 		<c:if test='${verloren}'>
-			<h2>U bent verloren, de te raden saus was: ${saus}</h2>
+			<h2>U bent verloren, ${saus}</h2>
 		</c:if>
 		<form method="post">
 		<button type="submit" name="nieuwSpel">Nieuw spel</button>
-	</form>
+		</form>
 	<img src='<c:url value="/images/${aantalFout}.png"/>' alt='The Hangman'>
 
 </body>

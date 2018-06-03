@@ -28,7 +28,6 @@ public class IndexServlet extends HttpServlet {
 		request.setAttribute("openGesloten", new openGesloten());
 		request.setAttribute("adres", new Adres("Putstraat", "2", new Gemeente("Waasmunster", 9250)));
 		request.getRequestDispatcher(VIEW).forward(request, response);
-		System.out.println(request.getRequestURI());
 	}
 	
 
