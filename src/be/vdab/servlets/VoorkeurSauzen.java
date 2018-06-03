@@ -3,11 +3,13 @@ package be.vdab.servlets;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 import be.vdab.repositories.SausRepository;
 
@@ -16,7 +18,7 @@ import be.vdab.repositories.SausRepository;
 public class VoorkeurSauzen extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static String VIEW = "/WEB-INF/JSP/voorkeursauzen.jsp";
-	private final SausRepository sausRepository = new SausRepository();
+	private final transient SausRepository sausRepository = new SausRepository();
 	private static final String VOORKEUR_REQUESTS = "voorkeurRequests";
 
 	
@@ -38,5 +40,11 @@ public class VoorkeurSauzen extends HttpServlet {
 	public void init() throws ServletException {
 		this.getServletContext().setAttribute(VOORKEUR_REQUESTS, new AtomicInteger());
 	}
+	
+	@Resource(name=SausRepository.JNDI_NAME)
+	void setDataSource(DataSource dataSource) {
+		sausRepository.setDataSource(dataSource);
+	}
+	
 
 }

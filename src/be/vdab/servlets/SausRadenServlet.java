@@ -3,12 +3,16 @@ package be.vdab.servlets;
 import java.io.IOException;
 import java.io.Serializable;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
+
+import be.vdab.repositories.SausRepository;
 
 //import be.vdab.repositories.SausRepository;
 
@@ -19,7 +23,7 @@ import javax.servlet.http.HttpSession;
 public class SausRadenServlet extends HttpServlet implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final String VIEW = "/WEB-INF/JSP/sausraden.jsp";
-	//private final SausRepository sausRepository = new SausRepository();
+	private final transient SausRepository sausRepository = new SausRepository();
 	private int aantalFout;
 	private char[] geraden;
 	private String saus;
@@ -98,6 +102,11 @@ public class SausRadenServlet extends HttpServlet implements Serializable {
 		}
 		response.sendRedirect(response.encodeRedirectURL(request.getRequestURI()));
 		
+	}
+	
+	@Resource(name = SausRepository.JNDI_NAME)
+	void setDataSource(DataSource dataSource) {
+		sausRepository.setDataSource(dataSource);
 	}
 
 }

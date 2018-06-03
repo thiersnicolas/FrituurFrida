@@ -8,16 +8,15 @@
 </c:import>
 </head>
 <body>
-	<h1>Tekst raden</h1>
-
+	<h1>Saus raden</h1>
 		<c:if test='${not empty geraden and not gewonnen and not verloren}'>
 			<h2>
-				Te raden tekst:
+				Te raden suas:
 				<c:forEach var='letter' items='${geraden}'>${letter}</c:forEach>
 			</h2>
 			<h2>letter:</h2>
 			<form method="post">
-			<input type="text" size="2" required  maxlength="1" name="raden">
+			<input type="text" size="2" required maxlength="1" name="raden">
 			<input type="submit" value="Raden">
 			</form>
 		</c:if>

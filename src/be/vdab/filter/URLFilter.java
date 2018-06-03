@@ -62,10 +62,12 @@ public class URLFilter implements Filter {
 				urlCorrect = true;
 			}
 			if (urlCorrect) {
-				//String[] dezePaginaArray = url.split("\\/");
-				String dezePagina = url.split("\\/")[url.split("\\/").length - 1];
 				@SuppressWarnings("unchecked")
-				ConcurrentHashMap<String, AtomicInteger> aantalRequestsMap = (ConcurrentHashMap<String, AtomicInteger>) fConfig.getServletContext().getAttribute(AANTAL_REQUESTS_MAP);
+				ConcurrentHashMap<String, AtomicInteger> aantalRequestsMap = 
+						(ConcurrentHashMap<String, AtomicInteger>) 
+						fConfig.getServletContext().getAttribute(AANTAL_REQUESTS_MAP);
+				String[] dezePaginaArray = url.split("/");
+				String dezePagina = dezePaginaArray[dezePaginaArray.length - 1];
 				for (String pagina : BESTAANDE_PAGINAS) {
 					if (pagina.equals(dezePagina)) {
 						if (aantalRequestsMap.containsKey(pagina)) {
@@ -93,8 +95,8 @@ public class URLFilter implements Filter {
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
 		this.fConfig = fConfig;
-		//new ConcurrentHashMap<String, AtomicInteger> aantalRequestsMap = (ConcurrentHashMap<String, AtomicInteger>)
-		fConfig.getServletContext().setAttribute(AANTAL_REQUESTS_MAP, new ConcurrentHashMap<String, AtomicInteger>());
+		ConcurrentHashMap<String, AtomicInteger> aantalRequestsMap = new ConcurrentHashMap<>();
+		fConfig.getServletContext().setAttribute(AANTAL_REQUESTS_MAP, aantalRequestsMap);
 	}
 
 }
