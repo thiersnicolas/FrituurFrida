@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import be.vdab.entities.Saus;
 
@@ -21,6 +23,8 @@ public class SausRepository extends AbstractRepository{
 	private final static String SELECT_ALL_INGREDIENTEN = "select naam from ingredienten";
 	private final static String DELETE_SAUS = "delete from sauzen where sauzen.id=?";
 	private final static String SELECT_SAUSNAMEN = "select naam from sauzen";
+	
+	private final static Logger LOGGER = Logger.getLogger(SausRepository.class.getName());
 
 	
 	
@@ -57,6 +61,8 @@ public class SausRepository extends AbstractRepository{
 			connection.commit();
 			return new ArrayList<Saus>(sauzenMap.values());
 		} catch (SQLException ex) {
+			System.out.println(getClass().getClassLoader().getResource("logging.properties"));
+			LOGGER.log(Level.SEVERE, "probleem met database frituurfrida", ex);
 			throw new RepositoryException(ex);
 		}
 	}
@@ -75,6 +81,7 @@ public class SausRepository extends AbstractRepository{
 			connection.commit();
 			return ingredienten;
 		} catch (SQLException ex) {
+			LOGGER.log(Level.SEVERE, "probleem met database frituurfrida", ex);
 			throw new RepositoryException(ex);
 		}
 	}
@@ -98,6 +105,7 @@ public class SausRepository extends AbstractRepository{
 			}
 			return sauzenMetIngredient;
 		} catch (SQLException ex) {
+			LOGGER.log(Level.SEVERE, "probleem met database frituurfrida", ex);
 			throw new RepositoryException(ex);
 		}
 	}
@@ -114,6 +122,7 @@ public class SausRepository extends AbstractRepository{
 			connection.commit();
 			return Arrays.stream(statement.executeBatch()).sum();
 		} catch (SQLException ex) {
+			LOGGER.log(Level.SEVERE, "probleem met database frituurfrida", ex);
 			throw new RepositoryException(ex);
 		}
 	}
@@ -132,6 +141,8 @@ public class SausRepository extends AbstractRepository{
 			connection.commit();
 			return sausNamen;
 		} catch (SQLException ex) {
+			System.out.println("logger: " + getClass().getClassLoader().getResource("logging.properties"));
+			LOGGER.log(Level.SEVERE, "probleem met database frituurfrida", ex);
 			throw new RepositoryException(ex);
 		}
 	}

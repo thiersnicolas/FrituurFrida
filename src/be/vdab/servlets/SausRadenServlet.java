@@ -33,8 +33,8 @@ public class SausRadenServlet extends HttpServlet implements Serializable {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-		if (session != null) {
-			//String saus = (String) session.getAttribute("saus");
+		if (session != null && session.getAttribute("aantalFout")!=null) {
+			String saus = (String) session.getAttribute("saus");
 			geraden = (char[]) session.getAttribute("geraden");
 			aantalFout = (int) session.getAttribute("aantalFout");
 			saus = (String) session.getAttribute("saus");
@@ -64,8 +64,7 @@ public class SausRadenServlet extends HttpServlet implements Serializable {
 		HttpSession session = request.getSession();
 		if (request.getParameter("nieuwSpel") != null) {
 			aantalFout = 0;
-			//saus = sausRepository.sauzenNamen().get((int)(Math.random()*(sausRepository.sauzenNamen().size())));
-			saus = "nicolas loves liese";
+			saus = sausRepository.sauzenNamen().get((int)(Math.random()*(sausRepository.sauzenNamen().size())));
 			geraden = new char[saus.length()];
 			for (int i=0; i<saus.length(); i++) {
 				if (saus.charAt(i) == ' ') {
